@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X11_novembre__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>11 novembre</label>
+    <required>false</required>
+    <type>Date</type>
+</CustomField>
