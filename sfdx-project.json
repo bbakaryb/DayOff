@@ -1,12 +1,19 @@
 {
   "packageDirectories": [
     {
+      "versionName": "Version 1.0",
+      "versionNumber": "1.0.0.NEXT",
       "path": "force-app",
-      "default": true
+      "default": true,
+      "package": "dayoff",
+      "versionDescription": "DayOff Package"
     }
   ],
-  "name": "dayoff",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "64.0"
+  "sourceApiVersion": "64.0",
+  "packageAliases": {
+    "dayoff": "0Hod20000000Pb7CAE",
+    "dayoff@1.0.0-1": "04td200000070BNAAY"
+  }
 }

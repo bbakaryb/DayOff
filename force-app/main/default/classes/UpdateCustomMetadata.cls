@@ -6,6 +6,8 @@ public without sharing class UpdateCustomMetadata {
         Map<String, Object> joursFeries = (Map<String, Object>) JSON.deserializeUntyped(holidaysJson);
 
         String recordName = zone + '_' + year;
+        recordName = recordName.replaceAll('-', '_');
+        recordName = recordName.replaceAll('__', '_');
 
         Metadata.CustomMetadata cmd = new Metadata.CustomMetadata();
         cmd.fullName = 'No_Working_Day__mdt.' + recordName;
@@ -21,34 +23,40 @@ public without sharing class UpdateCustomMetadata {
         nameVal.value = recordName;
         cmd.values.add(nameVal);
 
-        // Map each holiday to the correct field
+        Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.No_Working_Day__mdt.fields.getMap();
+        Map<String, String> labelToApiName = new Map<String, String>();
+
+        for (String fieldName : fieldMap.keySet()) {
+            Schema.DescribeFieldResult dfr = fieldMap.get(fieldName).getDescribe();
+            labelToApiName.put(dfr.getLabel(), fieldName);
+        }
+
         for (String dateStr : joursFeries.keySet()) {
             String label = (String) joursFeries.get(dateStr);
             Date dateValue;
+
             try {
                 dateValue = Date.valueOf(dateStr);
             } catch (Exception e) {
-                continue;
+                continue; 
             }
 
-            if (label.contains('janvier'))        addValue(cmd, 'X1er_janvier__c', dateValue);
-            else if (label.contains('Pâques'))    addValue(cmd, 'Lundi_Paques__c', dateValue);
-            else if (label.contains('1er mai'))   addValue(cmd, 'X1er_mai__c', dateValue);
-            else if (label.contains('8 mai'))     addValue(cmd, 'X8_mai__c', dateValue);
-            else if (label.contains('Ascension')) addValue(cmd, 'Ascension__c', dateValue);
-            else if (label.contains('Pentecôte')) addValue(cmd, 'Lundi_Pentecote__c', dateValue);
-            else if (label.contains('juillet'))   addValue(cmd, 'X14_juillet__c', dateValue);
-            else if (label.contains('Assomption')) addValue(cmd, 'Assomption__c', dateValue);
-            else if (label.contains('Toussaint')) addValue(cmd, 'Toussaint__c', dateValue);
-            else if (label.contains('novembre'))  addValue(cmd, 'X11_novembre__c', dateValue);
-            else if (label.contains('Noël'))      addValue(cmd, 'Jour_Noel__c', dateValue);
+            // check if api data label match custom metadata field label
+            if (labelToApiName.containsKey(label)) {
+                addValue(cmd, labelToApiName.get(label), dateValue);
+            } else {
+                System.debug('Any field match for label : ' + label);
+            }
         }
 
+        // Deployment metadata
         Metadata.DeployContainer dc = new Metadata.DeployContainer();
         dc.addMetadata(cmd);
 
-        Id jobId = Metadata.Operations.enqueueDeployment(dc, new CustomMetadataCallback());
-        System.debug('Deployment jobId: ' + jobId);
+        if (!Test.isRunningTest()) {
+            Id jobId = Metadata.Operations.enqueueDeployment(dc, new CustomMetadataCallback());
+            System.debug('Deployment jobId: ' + jobId);
+        }
     }
 
     private static void addValue(Metadata.CustomMetadata cmd, String field, Date value) {
