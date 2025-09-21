@@ -51,35 +51,46 @@ The package relies on an external API that provides official public holidays.
 ```bash
 git clone https://github.com/bbakaryb/DayOff.git
 cd DayOff
+```
 
 3. Authenticate a Dev Hub
+```bash
 sf org login web --set-default-dev-hub --alias DevHub
+```
 
 4. Create a Scratch Org
+```bash
 sf org create scratch --definition-file config/project-scratch-def.json --duration-days 30 --alias MyScratchOrg --target-dev-hub DevHub
-
+```
 
 5. Install the package:
+```bash
 sf package install --wait 10 --publish-wait 10 --package dayoff@1.0.0-1 --installation-key test1234 --no-prompt --target-org MyScratchOrg
+```
 
 6. Open your Scratch Org:
+```bash
 sf org open --target-org MyScratchOrg
+```
 
 ### Install package in a **Production or Sandbox Org**
 
 1. Authenticate your target org:
+```bash
 sf org login web --alias MyOrg
+```
 
-4. Install the package:
+2. Install the package:
+```bash
 sf package install --wait 10 --publish-wait 10 --package dayoff@1.0.0-1 --installation-key test1234 --no-prompt --target-org MyOrg
+```
 
 ---
 
 ## 🛠 Usage
 Once installed:
-Add the DayOff invocable method to your Salesforce Flows.
-
-Pass a DateTime and a Zone as input.
+- Add the DayOff invocable method to your Salesforce Flows. 
+- Pass a DateTime and a Zone as input.
 
 
 
