@@ -89,7 +89,7 @@ sf package install --wait 10 --publish-wait 10 --package dayoff@1.0.0-1 --instal
 
 ## 🛠 Usage
 Once installed:
-- Add the DayOff invocable method to your Salesforce Flows. 
+- Add the GET France Holidays invocable method to your Salesforce Flows. 
 - Pass a DateTime and a Zone as input.
 
 
