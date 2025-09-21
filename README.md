@@ -17,7 +17,7 @@ This package is useful to automate scheduling, prevent bookings on non-working d
   - Exposes an invocable method for Salesforce Flows.  
 
 - **Custom Metadata Type**: `No_Working_Day__mdt`  
-  - Stores the list of holidays for a given zone and year.  
+  - Stores the list of holidays for a given zone and date.  
   - Includes fields such as: `X1er_janvier__c`, `Lundi_Paques__c`, `Ascension__c`, `Jour_Noel__c`, etc.  
 
 ---
