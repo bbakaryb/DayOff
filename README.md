@@ -27,8 +27,8 @@ This package is useful to automate scheduling, prevent bookings on non-working d
 The package relies on an external API that provides official public holidays.  
 
 ### Constraints:
-- The API only supports dates from **20 years in the past** up to **5 years in the future** relative to the current year.  
-- Example: if today is **2025**, the valid range is **2005 → 2030**.  
+- The API only supports dates from **25 years in the past** up to **5 years in the future** relative to the current year.  
+- Example: if today is **2025**, the valid range is **2000 → 2030**.  
 - Dates outside this range will **not return results**.  
 
 ### Example Callout
